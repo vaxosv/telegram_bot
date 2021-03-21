@@ -7,7 +7,7 @@ const app = express();
 // dependencies
 let chatIds = [];
 
-const port = 3000;
+const port =  process.env.PORT || 3000
 const token = "1784152676:AAGjsAjjNG9rHxAn-tlS5rEK9h1sx0Iglts";
 
 const saveId = (ctx) => {
