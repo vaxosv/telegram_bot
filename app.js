@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const cron = require("node-cron");
 const express = require("express");
-import { CronJob } from 'cron';
+var CronJob = require("cron").CronJob;
 const schedule = require("node-schedule");
 
 const app = express();
@@ -48,14 +48,16 @@ bot.launch().then(() => {
 //   love(bot);
 // });
 
-const doSomething = new CronJob(
-    '20 18 * * *', //cron time
-    love(bot), //replace with your function that you want to call
-    null, //oncomplete
-    false, //start flag
+var job = new CronJob(
+  "40 * * * *",
+  function () {
+    love(bot);
+    console.log("You will see this message every second");
+  },
+  null,
+  true,
 );
-
-doSomething.start()
+job.start();
 
 // cron.schedule('25 13 * * *', function() {
 //   love(bot)
