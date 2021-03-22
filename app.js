@@ -42,9 +42,9 @@ bot.launch().then(() => {
 });
 
 // jobs
-// const job = schedule.scheduleJob({ hour: 18, minute: 5 }, async () => {
-//   love(bot);
-// });
+const job = schedule.scheduleJob({ hour: 18, minute: 10 }, async () => {
+  love(bot);
+});
 
 // cron.schedule('20 9 * * *', function() {
 //   love(bot)
