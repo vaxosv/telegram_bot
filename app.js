@@ -1,4 +1,5 @@
 const { Telegraf } = require("telegraf");
+const { kittySchema } = require("./database/skima");
 const express = require("express");
 const CronJob = require("cron").CronJob;
 
@@ -9,6 +10,35 @@ let chatIds = [];
 
 const port = process.env.PORT || 3000;
 const token = "1784152676:AAGjsAjjNG9rHxAn-tlS5rEK9h1sx0Iglts";
+const mongoose = require("mongoose");
+mongoose.connect(
+  "mongodb+srv://vaxosv:qweasdzxc@cluster0.mx7yt.mongodb.net/alldb?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", function () {
+  // we're connected!
+  console.log("we're connected!");
+});
+
+const Kitten = mongoose.model("Kitten", kittySchema);
+
+// const silence = new Kitten({ name: 'Silence' });
+// console.log(silence.name); // 'Silence'
+//
+//
+// silence.save(function (err, fluffy) {
+//   if (err) return console.error(err);
+// });
+
+Kitten.find({ name: /^Silence/ }, (err, docs)=> {
+  console.log(docs)
+})
 
 const saveId = (ctx) => {
   const id = ctx.message.chat.id;
@@ -40,20 +70,16 @@ bot.launch().then(() => {
   console.log("running...");
 });
 
+// job
 var job = new CronJob(
   "40 9 * * *",
   function () {
     love(bot);
-    console.log("You will see this message every second");
   },
   null,
-  true,
+  true
 );
 job.start();
-
-// cron.schedule('25 13 * * *', function() {
-//   love(bot)
-// });
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
