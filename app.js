@@ -1,6 +1,7 @@
 const { Telegraf } = require("telegraf");
 const cron = require("node-cron");
 const express = require("express");
+import { CronJob } from 'cron';
 const schedule = require("node-schedule");
 
 const app = express();
@@ -42,14 +43,19 @@ bot.launch().then(() => {
 });
 
 // jobs
-const job = schedule.scheduleJob({ hour: 18, minute: 15 }, async () => {
-  console.log("gaveshviiiiiiiiiiiii");
-  love(bot);
-});
-
-// cron.schedule('20 9 * * *', function() {
-//   love(bot)
+// const job = schedule.scheduleJob({ hour: 18, minute: 15 }, async () => {
+//   console.log("gaveshviiiiiiiiiiiii");
+//   love(bot);
 // });
+
+const doSomething = new CronJob(
+    '20 18 * * *', //cron time
+    love(bot), //replace with your function that you want to call
+    null, //oncomplete
+    false, //start flag
+);
+
+doSomething.start()
 
 // cron.schedule('25 13 * * *', function() {
 //   love(bot)
