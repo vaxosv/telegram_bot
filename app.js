@@ -72,7 +72,7 @@ bot.launch().then(() => {
 
 // job
 var job = new CronJob(
-  "40 9 * * *",
+  "0 9 * * *",
   function () {
     love(bot);
   },
