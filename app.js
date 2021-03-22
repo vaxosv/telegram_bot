@@ -1,5 +1,5 @@
 const { Telegraf } = require("telegraf");
-const cron = require('node-cron');
+const cron = require("node-cron");
 const express = require("express");
 const schedule = require("node-schedule");
 
@@ -42,7 +42,8 @@ bot.launch().then(() => {
 });
 
 // jobs
-const job = schedule.scheduleJob({ hour: 18, minute: 10 }, async () => {
+const job = schedule.scheduleJob({ hour: 18, minute: 15 }, async () => {
+  console.log("gaveshviiiiiiiiiiiii");
   love(bot);
 });
 
@@ -61,4 +62,3 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
