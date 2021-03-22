@@ -1,8 +1,6 @@
 const { Telegraf } = require("telegraf");
-const cron = require("node-cron");
 const express = require("express");
-var CronJob = require("cron").CronJob;
-const schedule = require("node-schedule");
+const CronJob = require("cron").CronJob;
 
 const app = express();
 
@@ -42,14 +40,8 @@ bot.launch().then(() => {
   console.log("running...");
 });
 
-// jobs
-// const job = schedule.scheduleJob({ hour: 18, minute: 15 }, async () => {
-//   console.log("gaveshviiiiiiiiiiiii");
-//   love(bot);
-// });
-
 var job = new CronJob(
-  "40 * * * *",
+  "40 9 * * *",
   function () {
     love(bot);
     console.log("You will see this message every second");
