@@ -1,7 +1,7 @@
 const { Telegraf } = require("telegraf");
 const cron = require('node-cron');
 const express = require("express");
-// const schedule = require("node-schedule");
+const schedule = require("node-schedule");
 
 const app = express();
 
@@ -42,7 +42,7 @@ bot.launch().then(() => {
 });
 
 // jobs
-const job = schedule.scheduleJob({ hour: 17, minute: 59 }, async () => {
+const job = schedule.scheduleJob({ hour: 18, minute: 1 }, async () => {
   love(bot);
 });
 
@@ -50,9 +50,9 @@ const job = schedule.scheduleJob({ hour: 17, minute: 59 }, async () => {
 //   love(bot)
 // });
 
-cron.schedule('25 13 * * *', function() {
-  love(bot)
-});
+// cron.schedule('25 13 * * *', function() {
+//   love(bot)
+// });
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
