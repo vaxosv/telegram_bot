@@ -42,7 +42,7 @@ bot.launch().then(() => {
 });
 
 // jobs
-const job = schedule.scheduleJob({ hour: 18, minute: 1 }, async () => {
+const job = schedule.scheduleJob({ hour: 18, minute: 5 }, async () => {
   love(bot);
 });
 
