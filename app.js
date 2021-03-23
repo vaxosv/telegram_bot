@@ -53,6 +53,9 @@ const forVaxo = (ctx) => {
   return ctx.reply("ანა ვახოსია! ვახოს ძალიან უყვარს ანა");
 };
 
+const song = (ctx) => {
+  return ctx.reply("https://www.youtube.com/watch?v=vGJTaP6anOU");
+}
 // init
 const bot = new Telegraf(token);
 bot.start((ctx) => {
@@ -62,6 +65,8 @@ bot.start((ctx) => {
 
 bot.command("ana", forVaxo);
 bot.command("help", help);
+bot.command("song", song);
+bot.command("mylove", myLove);
 
 bot.launch().then(() => {
   console.log("running...");
