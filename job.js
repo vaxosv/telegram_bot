@@ -45,3 +45,5 @@ const sendLove = (bot) => {
     });
   });
 };
+
+sendLove(bot)
