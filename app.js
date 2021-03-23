@@ -50,6 +50,7 @@ const forVaxo = (ctx) => {
 };
 
 const sendLove = (bot) => {
+  console.log('jobe dooooone');
   User.find({}, (err, docs) => {
     docs.forEach((user) => {
       (async () => {
