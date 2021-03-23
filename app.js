@@ -49,29 +49,6 @@ const forVaxo = (ctx) => {
   return ctx.reply("ანა ვახოსია! ვახოს ძალიან უყვარს ანა");
 };
 
-const sendLove = (bot) => {
-  console.log('jobe dooooone');
-  User.find({}, (err, docs) => {
-    docs.forEach((user) => {
-      (async () => {
-        const gf = new GiphyFetch("bQbBAmKcvQR89TWS4RGhvIrjZoeE01UL");
-
-        // fetch 1 gifs
-        const { data: gifs } = await gf.random({
-          tag: "love",
-          limit: 1,
-          lang: "en",
-          type: "stickers",
-        });
-        await bot.telegram.sendMessage(user.chatId, "---------------");
-        await bot.telegram.sendMessage(user.chatId, gifs.url);
-        await bot.telegram.sendMessage(user.chatId, "მიყვარხარ");
-        await bot.telegram.sendMessage(user.chatId, "---------------");
-      })();
-    });
-  });
-};
-
 // init
 const bot = new Telegraf(token);
 bot.start((ctx) => {
@@ -84,17 +61,6 @@ bot.command("ana", forVaxo);
 bot.launch().then(() => {
   console.log("running...");
 });
-
-// job
-var job = new CronJob(
-  "30 9 * * *",
-  function () {
-    sendLove(bot);
-  },
-  null,
-  true
-);
-job.start();
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
