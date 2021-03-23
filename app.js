@@ -1,13 +1,14 @@
 const { Telegraf } = require("telegraf");
 const { kittySchema } = require("./database/skima");
+const { UserSchema } = require("./database/users.skima");
+const GiphyFetch = require("@giphy/js-fetch-api").GiphyFetch;
 const express = require("express");
+global.fetch = require("node-fetch");
 const CronJob = require("cron").CronJob;
 
 const app = express();
 
 // dependencies
-let chatIds = [];
-
 const port = process.env.PORT || 3000;
 const token = "1784152676:AAGjsAjjNG9rHxAn-tlS5rEK9h1sx0Iglts";
 const mongoose = require("mongoose");
@@ -16,6 +17,7 @@ mongoose.connect(
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   }
 );
 
@@ -26,34 +28,47 @@ db.once("open", function () {
   console.log("we're connected!");
 });
 
-const Kitten = mongoose.model("Kitten", kittySchema);
-
-// const silence = new Kitten({ name: 'Silence' });
-// console.log(silence.name); // 'Silence'
-//
-//
-// silence.save(function (err, fluffy) {
-//   if (err) return console.error(err);
-// });
-
-Kitten.find({ name: /^Silence/ }, (err, docs)=> {
-  console.log(docs)
-})
+const User = mongoose.model("User", UserSchema);
 
 const saveId = (ctx) => {
   const id = ctx.message.chat.id;
-  if (!chatIds.includes(id)) {
-    chatIds = [...chatIds, id];
-  }
+  User.find({}, (err, docs) => {
+    if (!!docs.find(databaseItem => databaseItem.chatId !== id.toString())) {
+      const user = new User({
+        name: ctx.message.form?.username,
+        chatId: ctx.message.chat.id,
+      });
+
+      user.save(function (err, fluffy) {
+        if (err) return console.error(err);
+      });
+    }
+  });
 };
 
 const forVaxo = (ctx) => {
   return ctx.reply("ანა ვახოსია! ვახოს ძალიან უყვარს ანა");
 };
 
-const love = (bot) => {
-  chatIds.forEach((id) => {
-    bot.telegram.sendMessage(id, "მიყვარხარ");
+const sendLove = (bot) => {
+  User.find({}, (err, docs) => {
+    docs.forEach((user) => {
+      (async () => {
+        const gf = new GiphyFetch("bQbBAmKcvQR89TWS4RGhvIrjZoeE01UL");
+
+        // fetch 1 gifs
+        const { data: gifs } = await gf.random({
+          tag: "love",
+          limit: 1,
+          lang: "en",
+          type: "stickers",
+        });
+        await bot.telegram.sendMessage(user.chatId, "---------------");
+        await bot.telegram.sendMessage(user.chatId, gifs.url);
+        await bot.telegram.sendMessage(user.chatId, "მიყვარხარ");
+        await bot.telegram.sendMessage(user.chatId, "---------------");
+      })();
+    });
   });
 };
 
@@ -74,7 +89,7 @@ bot.launch().then(() => {
 var job = new CronJob(
   "0 9 * * *",
   function () {
-    love(bot);
+    sendLove(bot);
   },
   null,
   true
