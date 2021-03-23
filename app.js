@@ -11,6 +11,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const token = "1784152676:AAGjsAjjNG9rHxAn-tlS5rEK9h1sx0Iglts";
 const mongoose = require("mongoose");
+const { dateDiff } = require("./helpers/helper");
 mongoose.connect(
   "mongodb+srv://vaxosv:qweasdzxc@cluster0.mx7yt.mongodb.net/alldb?retryWrites=true&w=majority",
   {
@@ -46,7 +47,7 @@ const saveId = (ctx) => {
 };
 
 const help = (ctx) => {
-  return ctx.reply("/song\n /mylove\n");
+  return ctx.reply("/song\n /mylove\n /daysTogether\n");
 };
 
 const forVaxo = (ctx) => {
@@ -55,11 +56,15 @@ const forVaxo = (ctx) => {
 
 const song = (ctx) => {
   return ctx.reply("https://www.youtube.com/watch?v=vGJTaP6anOU");
-}
+};
 
 const myLove = (ctx) => {
   return ctx.reply("https://photos.app.goo.gl/Y9YjAncgcpFAUSdM7");
-}
+};
+
+const daysTogether = (ctx) =>
+  ctx.reply(dateDiff(new Date("2017-08-21"), new Date()));
+
 // init
 const bot = new Telegraf(token);
 bot.start((ctx) => {
@@ -70,7 +75,8 @@ bot.start((ctx) => {
 bot.command("ana", forVaxo);
 bot.command("help", help);
 bot.command("song", song);
-bot.command("mylove", myLove);
+bot.command("myLove", myLove);
+bot.command("daysTogether", daysTogether);
 
 bot.launch().then(() => {
   console.log("running...");

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { dateDiff } = require("./helpers/helper");
 const { Telegraf } = require("telegraf");
 const { UserSchema } = require("./database/users.skima");
 const GiphyFetch = require("@giphy/js-fetch-api").GiphyFetch;
@@ -40,10 +41,14 @@ const sendLove = (bot) => {
         await bot.telegram.sendMessage(user.chatId, "---------------");
         await bot.telegram.sendMessage(user.chatId, gifs.url);
         await bot.telegram.sendMessage(user.chatId, "მიყვარხარ");
+        await bot.telegram.sendMessage(
+          user.chatId,
+          `თქვენ ერთად ხართ${dateDiff(new Date('2017-08-21'), new Date())}`
+        );
         await bot.telegram.sendMessage(user.chatId, "---------------");
       })();
     });
   });
 };
 
-sendLove(bot)
+sendLove(bot);
