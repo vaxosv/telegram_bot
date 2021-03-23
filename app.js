@@ -56,6 +56,10 @@ const forVaxo = (ctx) => {
 const song = (ctx) => {
   return ctx.reply("https://www.youtube.com/watch?v=vGJTaP6anOU");
 }
+
+const myLove = (ctx) => {
+  return ctx.reply("https://photos.app.goo.gl/Y9YjAncgcpFAUSdM7");
+}
 // init
 const bot = new Telegraf(token);
 bot.start((ctx) => {
