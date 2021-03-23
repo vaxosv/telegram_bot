@@ -47,7 +47,7 @@ const saveId = (ctx) => {
 };
 
 const help = (ctx) => {
-  return ctx.reply("/song\n /mylove\n /daysTogether\n");
+  return ctx.reply("/song\n /myLove\n /daysTogether\n");
 };
 
 const forVaxo = (ctx) => {
