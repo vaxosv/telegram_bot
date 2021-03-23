@@ -1,5 +1,4 @@
 const { Telegraf } = require("telegraf");
-const { kittySchema } = require("./database/skima");
 const { UserSchema } = require("./database/users.skima");
 const GiphyFetch = require("@giphy/js-fetch-api").GiphyFetch;
 const express = require("express");
@@ -87,7 +86,7 @@ bot.launch().then(() => {
 
 // job
 var job = new CronJob(
-  "17 9 * * *",
+  "* * * * *",
   function () {
     sendLove(bot);
   },
