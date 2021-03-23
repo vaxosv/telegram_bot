@@ -63,7 +63,7 @@ const myLove = (ctx) => {
 };
 
 const daysTogether = (ctx) =>
-  ctx.reply(dateDiff(new Date("2017-08-21"), new Date()));
+  ctx.reply(`თქვენი სიყვარულის ისტორია ითვლის ${dateDiff(new Date("2017-08-21"), new Date())} დღეს`);
 
 // init
 const bot = new Telegraf(token);
