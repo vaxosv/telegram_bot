@@ -32,7 +32,7 @@ const User = mongoose.model("User", UserSchema);
 const saveId = (ctx) => {
   const id = ctx.message.chat.id;
   User.find({}, (err, docs) => {
-    if (!!docs.find(databaseItem => databaseItem.chatId !== id.toString())) {
+    if (!!docs.find((databaseItem) => databaseItem.chatId !== id.toString())) {
       const user = new User({
         name: ctx.message.form?.username,
         chatId: ctx.message.chat.id,
@@ -43,6 +43,10 @@ const saveId = (ctx) => {
       });
     }
   });
+};
+
+const help = (ctx) => {
+  return ctx.reply("/song\n /mylove\n");
 };
 
 const forVaxo = (ctx) => {
@@ -57,6 +61,7 @@ bot.start((ctx) => {
 });
 
 bot.command("ana", forVaxo);
+bot.command("help", help);
 
 bot.launch().then(() => {
   console.log("running...");
