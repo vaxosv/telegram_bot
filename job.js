@@ -25,7 +25,6 @@ db.once("open", function () {
 });
 
 const sendLove = (bot) => {
-  console.log("jobe dooooone");
   User.find({}, (err, docs) => {
     docs.forEach((user) => {
       (async () => {
@@ -40,7 +39,7 @@ const sendLove = (bot) => {
         });
         await bot.telegram.sendMessage(user.chatId, "---------------");
         await bot.telegram.sendMessage(user.chatId, gifs.url);
-        await bot.telegram.sendMessage(user.chatId, "მიყვარხარ");
+        await bot.telegram.sendMessage(user.chatId, "დილა მშვიდობის მიყვარხარ");
         await bot.telegram.sendMessage(
           user.chatId,
           `თქვენ ერთად ხართ${dateDiff(new Date('2017-08-21'), new Date())}`
