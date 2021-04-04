@@ -8,7 +8,8 @@ const axios = require("axios");
 
 const User = mongoose.model("User", UserSchema);
 const token = "1784152676:AAGjsAjjNG9rHxAn-tlS5rEK9h1sx0Iglts";
-const weatherApi = 'https://api.weatherbit.io/v2.0/current?key=1bd7a65ab4254a7a8ee7763c42b9396e&include=minutely&city=Tbilisi'
+const weatherApi =
+  "https://api.weatherbit.io/v2.0/current?key=1bd7a65ab4254a7a8ee7763c42b9396e&include=minutely&city=Tbilisi";
 const bot = new Telegraf(token);
 const sunny = [800, 801, 802];
 
@@ -40,24 +41,27 @@ const sendLove = (bot) => {
           lang: "en",
           type: "stickers",
         });
-        await bot.telegram.sendMessage(user.chatId, "---------------");
-        await bot.telegram.sendMessage(user.chatId, gifs.url);
-        await bot.telegram.sendMessage(user.chatId, "დილა მშვიდობის მიყვარხარ");
+        await bot.telegram.sendMessage(
+          user.chatId,
+          `${
+            gifs.url
+          }, \n დილა მშვიდობის მიყვარხარ \n თქვენ ერთად ხართ${dateDiff(
+            new Date("2017-08-21"),
+            new Date()
+          )}`
+        );
 
         axios.get(weatherApi).then(function (response) {
           const isSunny = !!sunny.find(
             (item) => response.data.data[0].weather.code === item
           );
           if (isSunny) {
-            bot.telegram.sendMessage(user.chatId, "დღეს შენნაირი დღეა, მზიანი და ლამაზი");
+            bot.telegram.sendMessage(
+              user.chatId,
+              "დღეს შენნაირი დღეა, მზიანი და ლამაზი"
+            );
           }
         });
-
-        await bot.telegram.sendMessage(
-          user.chatId,
-          `თქვენ ერთად ხართ${dateDiff(new Date("2017-08-21"), new Date())}`
-        );
-        await bot.telegram.sendMessage(user.chatId, "---------------");
       })();
     });
   });
